@@ -70,6 +70,39 @@ export function verifyMagicToken(token: string): { email: string } | null {
   }
 }
 
+// 6-digit code authentication
+export function generateLoginCode(): string {
+  return Math.floor(100000 + Math.random() * 900000).toString()
+}
+
+export function generateCodeToken(email: string, code: string): string {
+  const timestamp = Date.now()
+  const data = `${email}:${code}:${timestamp}`
+  const hash = simpleHash(data + TOKEN_SECRET)
+  return Buffer.from(`${data}:${hash}`).toString('base64url')
+}
+
+export function verifyCodeToken(token: string, inputCode: string): { email: string } | null {
+  try {
+    const decoded = Buffer.from(token, 'base64url').toString()
+    const [email, code, timestampStr, hash] = decoded.split(':')
+    
+    const timestamp = parseInt(timestampStr)
+    const expectedHash = simpleHash(`${email}:${code}:${timestamp}` + TOKEN_SECRET)
+    if (hash !== expectedHash) return null
+    
+    // Codes expire in 15 minutes
+    if (Date.now() - timestamp > 15 * 60 * 1000) return null
+    
+    // Verify the input code matches
+    if (code !== inputCode) return null
+    
+    return { email }
+  } catch {
+    return null
+  }
+}
+
 export async function setAuthCookie(email: string) {
   const token = generateToken(email)
   const cookieStore = await cookies()
