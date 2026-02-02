@@ -13,6 +13,10 @@ async function getProperties() {
       owners (
         id,
         primary_name
+      ),
+      property_photos (
+        id,
+        url
       )
     `)
     .order('name', { ascending: true })
@@ -64,9 +68,17 @@ export default async function PropertiesPage() {
               href={`/properties/${property.id}`}
               className="bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-md transition-shadow"
             >
-              {/* Placeholder image area */}
-              <div className="h-40 bg-gradient-to-br from-[#b5c4b1]/30 to-[#3d3530]/10 flex items-center justify-center">
-                <Home className="w-12 h-12 text-[#3d3530]/30" />
+              {/* Thumbnail */}
+              <div className="h-40 bg-gradient-to-br from-[#b5c4b1]/30 to-[#3d3530]/10 flex items-center justify-center overflow-hidden">
+                {property.property_photos && property.property_photos.length > 0 ? (
+                  <img 
+                    src={property.property_photos[0].url} 
+                    alt={property.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <Home className="w-12 h-12 text-[#3d3530]/30" />
+                )}
               </div>
               <div className="p-4">
                 <div className="flex items-start justify-between mb-2">
