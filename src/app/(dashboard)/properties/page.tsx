@@ -81,6 +81,19 @@ export default async function PropertiesPage() {
                     {property.status}
                   </span>
                 </div>
+                {property.property_type && (
+                  <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded-full mb-2 ${
+                    property.property_type === 'short_term_rental'
+                      ? 'bg-blue-100 text-blue-800'
+                      : property.property_type === 'long_term_rental'
+                      ? 'bg-purple-100 text-purple-800'
+                      : 'bg-orange-100 text-orange-800'
+                  }`}>
+                    {property.property_type === 'short_term_rental' ? 'Short Term Rental' 
+                      : property.property_type === 'long_term_rental' ? 'Long Term Rental' 
+                      : 'Second Home'}
+                  </span>
+                )}
                 <p className="text-sm text-gray-500 mb-3">
                   {property.address}{property.city && `, ${property.city}`}
                 </p>

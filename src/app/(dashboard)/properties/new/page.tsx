@@ -33,6 +33,7 @@ function NewPropertyForm() {
       name: formData.get('name'),
       address: formData.get('address') || null,
       city: formData.get('city') || null,
+      property_type: formData.get('property_type') || 'short_term_rental',
       bedrooms: formData.get('bedrooms') ? parseInt(formData.get('bedrooms') as string) : null,
       bathrooms: formData.get('bathrooms') ? parseFloat(formData.get('bathrooms') as string) : null,
       sleeps: formData.get('sleeps') ? parseInt(formData.get('sleeps') as string) : null,
@@ -128,16 +129,30 @@ function NewPropertyForm() {
                 />
               </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-              <select
-                name="status"
-                className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#b5c4b1] focus:border-transparent"
-              >
-                <option value="active">Active</option>
-                <option value="onboarding">Onboarding</option>
-                <option value="inactive">Inactive</option>
-              </select>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Property Type *</label>
+                <select
+                  name="property_type"
+                  required
+                  className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#b5c4b1] focus:border-transparent"
+                >
+                  <option value="short_term_rental">Short Term Rental</option>
+                  <option value="long_term_rental">Long Term Rental</option>
+                  <option value="second_home">Second Home</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <select
+                  name="status"
+                  className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#b5c4b1] focus:border-transparent"
+                >
+                  <option value="active">Active</option>
+                  <option value="onboarding">Onboarding</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
