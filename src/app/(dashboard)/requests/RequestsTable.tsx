@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Receipt, ExternalLink } from 'lucide-react'
 
 const statusColors: Record<string, string> = {
   pending: 'bg-yellow-100 text-yellow-800',
@@ -13,6 +15,7 @@ const statusColors: Record<string, string> = {
 const statusOptions = ['pending', 'confirmed', 'in_progress', 'completed', 'cancelled']
 
 export default function RequestsTable({ requests: initialRequests }: { requests: any[] }) {
+  const router = useRouter()
   const [requests, setRequests] = useState(initialRequests)
   const [updating, setUpdating] = useState<string | null>(null)
 
@@ -45,7 +48,9 @@ export default function RequestsTable({ requests: initialRequests }: { requests:
             <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Guest</th>
             <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
             <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Invoice</th>
             <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Submitted</th>
+            <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
           </tr>
         </thead>
         <tbody className="divide-y">
@@ -88,8 +93,30 @@ export default function RequestsTable({ requests: initialRequests }: { requests:
                   ))}
                 </select>
               </td>
+              <td className="px-6 py-4">
+                {request.invoice_id ? (
+                  <span className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full ${
+                    request.invoice_status === 'paid' 
+                      ? 'bg-green-100 text-green-800' 
+                      : 'bg-yellow-100 text-yellow-800'
+                  }`}>
+                    <Receipt className="w-3 h-3" />
+                    {request.invoice_status === 'paid' ? 'Paid' : 'Sent'}
+                  </span>
+                ) : (
+                  <span className="text-gray-400 text-sm">—</span>
+                )}
+              </td>
               <td className="px-6 py-4 text-sm text-gray-500">
                 {new Date(request.created_at).toLocaleDateString()}
+              </td>
+              <td className="px-6 py-4">
+                <button
+                  onClick={() => router.push(`/requests/${request.id}`)}
+                  className="text-[#3d3530] hover:underline text-sm font-medium inline-flex items-center gap-1"
+                >
+                  View <ExternalLink className="w-3 h-3" />
+                </button>
               </td>
             </tr>
           ))}
