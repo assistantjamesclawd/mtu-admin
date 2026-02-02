@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { supabaseAdmin } from '@/lib/supabase'
 import { ArrowLeft, Home, MapPin, Bed, Bath, Users, Wifi, Key, ExternalLink } from 'lucide-react'
+import PropertyPhotos from '@/components/PropertyPhotos'
 
 async function getProperty(id: string) {
   const supabase = supabaseAdmin()
@@ -81,16 +82,8 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Photos placeholder */}
-          <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Photos</h2>
-            <div className="bg-gray-100 rounded-lg h-48 flex items-center justify-center">
-              <div className="text-center text-gray-400">
-                <Home className="w-12 h-12 mx-auto mb-2" />
-                <p>Photo upload coming soon</p>
-              </div>
-            </div>
-          </div>
+          {/* Photos */}
+          <PropertyPhotos propertyId={id} />
 
           {/* Details */}
           <div className="bg-white rounded-xl shadow-sm border p-6">
