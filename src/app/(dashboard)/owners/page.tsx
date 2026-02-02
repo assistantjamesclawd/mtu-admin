@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { supabaseAdmin } from '@/lib/supabase'
 import { Plus, Phone, Mail } from 'lucide-react'
+import { formatPhone } from '@/lib/format'
 
 // Force dynamic rendering - don't cache this page
 export const dynamic = 'force-dynamic'
@@ -77,7 +78,7 @@ export default async function OwnersPage() {
                     <div className="flex flex-col gap-1 text-sm text-gray-600">
                       {owner.primary_phone && (
                         <span className="flex items-center gap-1">
-                          <Phone className="w-3 h-3" /> {owner.primary_phone}
+                          <Phone className="w-3 h-3" /> {formatPhone(owner.primary_phone)}
                         </span>
                       )}
                       {owner.primary_email && (

@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { supabaseAdmin } from '@/lib/supabase'
 import { ArrowLeft, Phone, Mail, MapPin, Home } from 'lucide-react'
+import { formatPhone } from '@/lib/format'
 
 async function getOwner(id: string) {
   const supabase = supabaseAdmin()
@@ -86,7 +87,7 @@ export default async function OwnerDetailPage({ params }: { params: Promise<{ id
                 {owner.primary_phone && (
                   <div className="flex items-center gap-2 text-gray-600 mt-1">
                     <Phone className="w-4 h-4" />
-                    <a href={`tel:${owner.primary_phone}`} className="hover:underline">{owner.primary_phone}</a>
+                    <a href={`tel:${owner.primary_phone}`} className="hover:underline">{formatPhone(owner.primary_phone)}</a>
                     <a href={`sms:${owner.primary_phone}`} className="ml-2 px-2 py-0.5 text-xs bg-[#b5c4b1]/30 text-[#3d3530] rounded hover:bg-[#b5c4b1]/50">
                       Text
                     </a>
@@ -107,7 +108,7 @@ export default async function OwnerDetailPage({ params }: { params: Promise<{ id
                   {owner.secondary_phone && (
                     <div className="flex items-center gap-2 text-gray-600 mt-1">
                       <Phone className="w-4 h-4" />
-                      <a href={`tel:${owner.secondary_phone}`} className="hover:underline">{owner.secondary_phone}</a>
+                      <a href={`tel:${owner.secondary_phone}`} className="hover:underline">{formatPhone(owner.secondary_phone)}</a>
                       <a href={`sms:${owner.secondary_phone}`} className="ml-2 px-2 py-0.5 text-xs bg-[#b5c4b1]/30 text-[#3d3530] rounded hover:bg-[#b5c4b1]/50">
                         Text
                       </a>
