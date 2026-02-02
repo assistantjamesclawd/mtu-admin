@@ -1,4 +1,6 @@
 import Link from 'next/link'
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
 import { supabaseAdmin } from '@/lib/supabase'
 import { Plus, Wrench, Phone, Mail, Star } from 'lucide-react'
 

@@ -1,4 +1,6 @@
 import { supabaseAdmin } from '@/lib/supabase'
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
 import { ClipboardList } from 'lucide-react'
 import RequestsTable from './RequestsTable'
 

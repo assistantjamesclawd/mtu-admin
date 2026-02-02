@@ -2,6 +2,9 @@ import Link from 'next/link'
 import { supabaseAdmin } from '@/lib/supabase'
 import { Plus, Phone, Mail } from 'lucide-react'
 
+// Force dynamic rendering - don't cache this page
+export const dynamic = 'force-dynamic'
+
 async function getOwners() {
   const supabase = supabaseAdmin()
   const { data, error } = await supabase
